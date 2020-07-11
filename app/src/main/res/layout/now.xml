@@ -6,7 +6,8 @@
     <FrameLayout
         android:id="@+id/flTitle"
         android:layout_width="match_parent"
-        android:layout_height="70dp">
+        android:layout_height="70dp"
+        android:fitsSystemWindows="true">
         <TextView
             android:id="@+id/tvPlaceName"
             android:layout_width="wrap_content"

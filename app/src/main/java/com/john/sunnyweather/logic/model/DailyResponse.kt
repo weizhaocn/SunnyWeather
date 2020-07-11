@@ -17,7 +17,7 @@ data class DailyResponse(val status: String, val result: Result){
 
     data class Skycon(val value: String, val date: Date)
 
-    data class LifeIndex(val coldRisk: List<LifeDescription>, val carWashing: List<LifeDescription>, val dressing: List<LifeDescription>)
+    data class LifeIndex(val coldRisk: List<LifeDescription>, val carWashing: List<LifeDescription>, val dressing: List<LifeDescription>, val ultraviolet: List<LifeDescription>)
 
     data class LifeDescription(val desc: String)
 

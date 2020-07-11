@@ -1,5 +1,6 @@
 package com.john.sunnyweather.ui.place
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,13 +9,14 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.john.sunnyweather.R
 import com.john.sunnyweather.logic.model.Place
+import com.john.sunnyweather.ui.weather.WeatherActivity
 import kotlinx.android.synthetic.main.place_item.view.*
 
 /**
  * Created by john_ on 2020/7/9.
  * Describe:
  */
-class PlaceAdapter(val fragment: Fragment, val places: List<Place>): RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
+class PlaceAdapter(val fragment: PlaceFragment, val places: List<Place>): RecyclerView.Adapter<PlaceAdapter.ViewHolder>() {
     inner class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val tvPlaceName: TextView = view.findViewById(R.id.tvPlaceName)
         val tvPlaceAddress: TextView = view.findViewById(R.id.tvPlaceAddress)
@@ -22,7 +24,20 @@ class PlaceAdapter(val fragment: Fragment, val places: List<Place>): RecyclerVie
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.place_item, parent, false)
-        return ViewHolder(view)
+        val holder = ViewHolder(view)
+        holder.itemView.setOnClickListener {
+            val position = holder.adapterPosition
+            val place = places[position]
+            val intent = Intent(parent.context, WeatherActivity::class.java).apply {
+                putExtra("location_lng", place.location.lng)
+                putExtra("location_lat", place.location.lat)
+                putExtra("place_name", place.name)
+            }
+            fragment.viewModel.savePlace(place)
+            fragment.startActivity(intent)
+            fragment.activity?.finish()
+        }
+        return holder
     }
 
     override fun getItemCount(): Int {
